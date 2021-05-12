@@ -144,22 +144,22 @@ const _editBookByIdHandler = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Gagal memperbarui Buku. Id tidak ditemukan',
+    message: 'Gagal memperbarui buku. Id tidak ditemukan',
   });
   response.code(404);
   return response;
 };
 
-const _deleteNoteByIdHandler = (request, h) => {
-  const {id} = request.params;
+const _deleteBookByIdHandler = (request, h) => {
+  const {bookId} = request.params;
 
-  const index = books.findIndex((note) => note.id === id);
+  const index = books.findIndex((book) => book.id === bookId);
 
   if (index !== -1) {
     books.splice(index, 1);
     const response = h.response({
       status: 'success',
-      message: 'Catatan berhasil dihapus',
+      message: 'Buku berhasil dihapus',
     });
     response.code(200);
     return response;
@@ -167,7 +167,7 @@ const _deleteNoteByIdHandler = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Catatan gagal dihapus. Id tidak ditemukan',
+    message: 'Buku gagal dihapus. Id tidak ditemukan',
   });
   response.code(404);
   return response;
@@ -177,4 +177,4 @@ export default addBookHandler;
 export const getAllBooksHandler = _getAllBooksHandler;
 export const getBookByIdHandler = _getBookByIdHandler;
 export const editBookByIdHandler = _editBookByIdHandler;
-export const deleteNoteByIdHandler =_deleteNoteByIdHandler;
+export const deleteBookByIdHandler =_deleteBookByIdHandler;

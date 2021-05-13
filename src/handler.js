@@ -56,16 +56,27 @@ const addBookHandler = (request, h) => {
 
 const _getAllBooksHandler = (request, h) => {
   const simpleBooksDesc = [];
+  const params = request.query;
+  const nameQuery = new RegExp(params.name, 'i');
+  const readingQuery = params.reading == 1;
+  const finishedQuery = params.finished == 1;
   let newSimpleBookDesc;
   let id;
   let name;
   let publisher;
   books.forEach(function(book) {
-    id = book.id;
-    name = book.name;
-    publisher = book.name;
-    newSimpleBookDesc = {id, name, publisher};
-    simpleBooksDesc.push(newSimpleBookDesc);
+    if (((params.name != null && book.name.match(nameQuery)) ||
+    params.name == null) &&
+      ((params.reading != null && book.reading == readingQuery) ||
+      params.reading == null) &&
+      ((params.finished != null && book.finished == finishedQuery) ||
+      params.finished == null)) {
+      id = book.id;
+      name = book.name;
+      publisher = book.name;
+      newSimpleBookDesc = {id, name, publisher};
+      simpleBooksDesc.push(newSimpleBookDesc);
+    }
   });
   const response = h.response({
     status: 'success',
